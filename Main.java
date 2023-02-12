@@ -83,6 +83,10 @@ class Main{
                 CardMkr.CardDisplay(cPlayer.Books);
             }
             // Get the takecard function to return if the player has been eliminated and end the game.
+            if (Player.TakeCard(cPlayer)){
+                break;
+            }
+
             wait(2500, true);
             playerTurn++;
             if (playerTurn == pSize){
@@ -94,5 +98,6 @@ class Main{
                 return;
             }
         }
+        System.out.print("THE GAME HAS ENDED THE WINNER IS:");
     }
 }
