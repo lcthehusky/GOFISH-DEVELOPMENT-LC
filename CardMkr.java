@@ -10,11 +10,9 @@ class CardMkr {
   public String SuiteGraphicLy3;
   public String SuiteGraphicLy4;
   String[] suites = { "♥", "♠", "♦", "♣" };
-  public static String[] suiteStrings = { "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
-    "ACE", "JACK", "QUEEN", "KING" };
-  String[] suiteNums = {"2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "J ", "Q ", "K ","A "};
-  public static int CardAssignmentCntr = 0;
-
+  public static String[] suiteStrings = { "ACE","TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
+    "JACK", "QUEEN", "KING"};
+  String[] suiteNums = {"A ","2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "J ", "Q ", "K "};
   CardMkr() {
     Random rand = new Random();
     int randsuite = rand.nextInt(4);
@@ -54,19 +52,14 @@ class CardMkr {
       smaldex = cntr1;
     }
   }
-  public static boolean DealCard(ArrayList<CardMkr> srtDeck, int CardReturnNum) {
-    if (Main.stock.size() == 0){
-      Main.cRemaining = false;
-      return false;
-    }
+  public static void DealCard(ArrayList<CardMkr> srtDeck, int CardReturnNum) {
     for (int cntr4 = 0; cntr4 < CardReturnNum; cntr4++) {
-      srtDeck.add(Main.stock.remove(CardAssignmentCntr));
+      srtDeck.add(Main.stock.remove(0));
       if (Main.stock.size() == 0){
-        System.out.println("Could only add "+ cntr4 + " cards. There are no more cards left.");
-        return false;
+        System.out.println("THERE ARE NO MORE CARDS LEFT");
+        Main.cRemaining = false;
       }
     }
-    return true;
   }
   public static void CardDisplay(ArrayList<CardMkr> dspDeck) {
     String TempLy1 = new String();
