@@ -67,8 +67,8 @@ class Player extends Main{
   }
 
   public static boolean RemovePlayer(int plyIndex){
-    System.out.println("Player: "+plyArray.remove(plyIndex)+" is out of the game.");
-    if (plyArray.get(plyIndex-1).isPlayer == true){
+    System.out.println("Player: "+plyArray.remove(plyIndex).Name+" is out of the game.");
+    if (plyArray.get(plyIndex).isPlayer == true){
       return true;
     }
     return false;
