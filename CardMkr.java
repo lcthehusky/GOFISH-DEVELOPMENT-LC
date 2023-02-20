@@ -5,6 +5,7 @@ class CardMkr {
   public String SuiteType;
   public String SuiteName;
   public String SuiteValue;
+  public int SuiteNval;
   public String SuiteGraphicLy1;
   public String SuiteGraphicLy2;
   public String SuiteGraphicLy3;
@@ -13,6 +14,7 @@ class CardMkr {
   public static String[] suiteStrings = { "ACE","TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
     "JACK", "QUEEN", "KING"};
   String[] suiteNums = {"A ","2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "J ", "Q ", "K "};
+  int[] sweets = {1,2,3,4,5,6,7,8,9,10,11,12,13};
   CardMkr() {
     Random rand = new Random();
     int randsuite = rand.nextInt(4);
@@ -20,6 +22,7 @@ class CardMkr {
     SuiteType = suites[randsuite];
     SuiteName = suiteStrings[randval];
     SuiteValue = suiteNums[randval];
+    SuiteNval = sweets[randval];
     SuiteGraphicLy1 = "╔═══╗";
     SuiteGraphicLy2 = "║ " + SuiteType + " ║";
     SuiteGraphicLy3 = "║ " + SuiteValue + "║";
@@ -44,12 +47,33 @@ class CardMkr {
     }
     return shfflDeck;
   }
+  // public static void CardSorter(ArrayList<CardMkr> srtDeck){
+  //   int lowest, bestplace;
+  //   bestplace = 0;
+  //   for (int sorted = 0; sorted<srtDeck.size();sorted++){
+  //     lowest = srtDeck.get(0).SuiteNval;
+  //     for (int prog = sorted+1; prog<srtDeck.size();){
+  //       if (lowest>srtDeck.get(prog).SuiteNval){
+  //         lowest = srtDeck.get(prog).SuiteNval;
+  //       }
+  //     }
+  //     for (int x = 0;x<sorted+1;x++){
+  //       if (srtDeck.get(x).SuiteNval>srtDeck.get(lowest).SuiteNval){
+  //         bestplace = x;
+  //       }
+  //     }
+  //     srtDeck.add(bestplace, srtDeck.remove(lowest));
+  //   }
+  // }
   public static void CardSorter(ArrayList<CardMkr> srtDeck){
-    int i = srtDeck.size();
-    int smaldex;
-    int currdex;
-    for (int cntr1 = 0; cntr1<i;cntr1++){
-      smaldex = cntr1;
+    int smolindex = 0;
+    for (int cntr1 = 0; cntr1<srtDeck.size(); cntr1++){
+      for (int cntr2 = cntr1+1; cntr2<srtDeck.size(); cntr2++){
+        if (srtDeck.get(cntr2).SuiteNval<srtDeck.get(smolindex).SuiteNval){
+          smolindex = cntr2;
+        }
+      }
+      
     }
   }
   public static void DealCard(ArrayList<CardMkr> srtDeck, int CardReturnNum) {

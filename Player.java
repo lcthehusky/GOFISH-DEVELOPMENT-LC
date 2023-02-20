@@ -14,6 +14,7 @@ class Player extends Main{
   static Random randy = new Random();
   public static int catchCntr = 0;
   public static Player hscPlayer = new Player("bot", 0, false);
+  public static int bWon = 0;
   Player(String newName, int newCardnum, boolean isplayer) {
     Hand = new ArrayList<CardMkr>();
     Books = new ArrayList<CardMkr>();
@@ -38,10 +39,10 @@ class Player extends Main{
   public static boolean BookCkr(Player ply){
     int hsz = ply.Hand.size();
     ArrayList<Integer> matchKrd = new ArrayList<>();
-    for (int cntr1 = 0; cntr1<hsz;){
+    for (int cntr1 = 0; cntr1<hsz;cntr1++){
       matchKrd.clear();
-      for (int cntr2 = 0; cntr2<hsz;){
-        if (ply.Hand.get(cntr1).SuiteName.equals(ply.Hand.get(cntr2))){
+      for (int cntr2 = 0; cntr2<hsz;cntr2++){
+        if (ply.Hand.get(cntr1).SuiteName.equals(ply.Hand.get(cntr2).SuiteName)){
           matchKrd.add(cntr2);
         }
       }
@@ -49,8 +50,8 @@ class Player extends Main{
         for (int cntr3 = 0; cntr3 <4;cntr3++){
           ply.Books.add(ply.Hand.remove(matchKrd.get(cntr3)-cntr3));
         }
-        plyArray.get(plyTurn).Score++;
-        int bWon = 0;
+        ply.Score++;
+        bWon++;
         for (Player sugoma : plyArray){
           bWon += sugoma.Score;
           if (sugoma.Score> hscPlayer.Score){
