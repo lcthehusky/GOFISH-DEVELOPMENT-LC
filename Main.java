@@ -88,7 +88,7 @@ class Main extends Constants{
         catch(Exception e){
           System.out.println(Main.ANSI_RED+"\nIm sorry but you input was invalid, try again."+Main.ANSI_RESET);
           scan.nextLine();
-          wait(200, true);
+          wait(500, true);
         }
       }
       
@@ -102,8 +102,8 @@ class Main extends Constants{
         break;
       } else {
         System.out.print(
-            "Im Sorry you have an " + ANSI_RED + "invalid" + ANSI_RESET + " number of players.\n\nPlease Try Again.");
-        wait(1700, true);
+          "Im Sorry you have an " + ANSI_RED + "invalid" + ANSI_RESET + " number of players.\n\nPlease Try Again.");
+        wait(1250, true);
       }
     }
     System.out.println("Would You like to Name your opponents?");
@@ -157,9 +157,26 @@ class Main extends Constants{
         while(true){
             pSize = plyArray.size();
             cPlayer = plyArray.get(playerTurn);
+            if (turnCounter !=0 && (!(pSize<players))){
+              System.out.println("Order of Players: ");
+              for (int i = 0; i < pSize; i++){
+                if (i == 0){
+                    wait(500,false);
+                    System.out.println(Constants.ANSI_BLUE + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
+                }
+                else if (i == pSize-1){
+                    wait(500,false);
+                    System.out.println("and "+Constants.ANSI_RED+plyArray.get(i).Name+Constants.ANSI_CLEAR);
+                }
+                else{
+                    wait(500,false);
+                    System.out.println(Constants.ANSI_RED + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
+                }
+            }
+            }
             if (pSize<players){
                 
-                System.out.println("The remaining players are: ");
+                System.out.println("A player has been eliminated, The remaining players are: ");
                 for (int i = 0; i < pSize; i++){
                     if (i == 0){
                         wait(500,false);
@@ -188,13 +205,13 @@ class Main extends Constants{
                 System.out.println("Since you had no cards left we gave you a Card ;)");
                 CardMkr.DealCard(cPlayer.Hand, 1);
             }
-            System.out.println("Your cards are:");
             if (cPlayer.isPlayer){
-                CardMkr.CardDisplay(cPlayer.Hand);
+              System.out.println("Your cards are:");
+              CardMkr.CardDisplay(cPlayer.Hand);
             }
             if (cPlayer.Books.size() != 0){
-                System.out.println("Your books are:");
-                CardMkr.CardDisplay(cPlayer.Books);
+              System.out.println("Your books are:");
+              CardMkr.CardDisplay(cPlayer.Books);
             }
             // Get the takecard function to return if the player has been eliminated and end the game.
             Player.ran = false;
@@ -203,8 +220,8 @@ class Main extends Constants{
                 uElim = true;
                 break;
             }
-            if (Player.BookCkr(playerTurn)){
-                break;
+            if (Player.BookCkr(cPlayer)){
+              break;
             }
             wait(2000, true);
             playerTurn++;

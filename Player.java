@@ -32,19 +32,22 @@ class Player extends Main{
     nameindexcntr++;
     CardMkr.DealCard(Hand, newCardnum);
   }
-
-  // https://bicyclecards.com/how-to-play/go-fish/
-  public static Boolean BookCkr(int plyTurn) {
-    for (CardMkr sussy : plyArray.get(plyTurn).Hand) {
-      BCKR.clear();
-      for (int cntr1 = 0; cntr1 < plyArray.get(plyTurn).Hand.size(); cntr1++) {
-        if (sussy.SuiteName.equals(plyArray.get(plyTurn).Hand.get(cntr1).SuiteName)) {
-          BCKR.add(cntr1);
+  /*
+   * Checks if the player as a matching set of 4 cards. If it is the case then it will 
+   */
+  public static boolean BookCkr(Player ply){
+    int hsz = ply.Hand.size();
+    ArrayList<Integer> matchKrd = new ArrayList<>();
+    for (int cntr1 = 0; cntr1<hsz;){
+      matchKrd.clear();
+      for (int cntr2 = 0; cntr2<hsz;){
+        if (ply.Hand.get(cntr1).SuiteName.equals(ply.Hand.get(cntr2))){
+          matchKrd.add(cntr2);
         }
       }
-      if (BCKR.size() == 4) {
-        for (int cntr2 = 0; cntr2 < 4; cntr2++) {
-          plyArray.get(plyTurn).Books.add(plyArray.get(plyTurn).Hand.remove(BCKR.get(cntr2) - cntr2));
+      if (matchKrd.size() == 4){
+        for (int cntr3 = 0; cntr3 <4;cntr3++){
+          ply.Books.add(ply.Hand.remove(matchKrd.get(cntr3)-cntr3));
         }
         plyArray.get(plyTurn).Score++;
         int bWon = 0;
@@ -57,10 +60,12 @@ class Player extends Main{
         if (bWon == 13){
           return true;
         }
+        return false;
       }
     }
     return false;
   }
+
   public static boolean RemovePlayer(int plyIndex){
     System.out.println("Player: "+plyArray.remove(plyIndex)+" is out of the game.");
     if (plyArray.get(plyIndex-1).isPlayer == true){
@@ -68,6 +73,7 @@ class Player extends Main{
     }
     return false;
   }
+  
   public static boolean TakeCard(Player cPly, int pTurn){
     String askType = new String();
     int plyIndex = pTurn;
