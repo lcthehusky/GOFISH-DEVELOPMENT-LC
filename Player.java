@@ -61,7 +61,6 @@ class Player extends Main{
         if (bWon == 13){
           return true;
         }
-        return false;
       }
     }
     return false;
@@ -74,7 +73,22 @@ class Player extends Main{
     }
     return false;
   }
-  
+  public static void DisplayPly(int wTime){
+    for (int i = 0; i < plyArray.size(); i++){
+      if (i == 0){
+        wait(wTime,false);
+        System.out.print(Constants.ANSI_BLUE + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
+      }
+      else if (i == plyArray.size()-1){
+        wait(wTime,false);
+        System.out.print("and "+Constants.ANSI_RED+plyArray.get(i).Name+Constants.ANSI_CLEAR+"\n");
+      }
+      else{
+        wait(wTime,false);
+        System.out.print(Constants.ANSI_RED + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
+      }
+    }
+  }
   public static boolean TakeCard(Player cPly, int pTurn){
     String askType = new String();
     int plyIndex = pTurn;

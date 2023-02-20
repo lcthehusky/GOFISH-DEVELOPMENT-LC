@@ -154,42 +154,17 @@ class Main extends Constants{
     System.out.println("Remember to ask another player for their cards you must state for example:" + ANSI_ANSWER
         + plyArray.get(1).Name + " do you have any tens?\n\nor"+ANSI_ANSWER+" Omar do you have any kings?");
     System.out.println("════════ ══════════════════════════════════════════════════════════════════");
+
     while(true){
       pSize = plyArray.size();
       cPlayer = plyArray.get(playerTurn);
       if ((turnCounter !=0 && (!(pSize<players)))&& cPlayer.isPlayer){
-        System.out.println("Order of Players is: ");
-        for (int i = 0; i < pSize; i++){
-          if (i == 0){
-            wait(500,false);
-            System.out.print(Constants.ANSI_BLUE + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
-          }
-          else if (i == pSize-1){
-            wait(500,false);
-            System.out.print("and "+Constants.ANSI_RED+plyArray.get(i).Name+Constants.ANSI_CLEAR);
-          }
-          else{
-            wait(500,false);
-            System.out.print(Constants.ANSI_RED + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
-          }
-        }
+        System.out.print("Available players: ");
+        Player.DisplayPly(250);
       }
       if (pSize<players){
         System.out.println("A player has been eliminated, The remaining players are: ");
-        for (int i = 0; i < pSize; i++){
-          if (i == 0){
-            wait(500,false);
-            System.out.print(Constants.ANSI_BLUE + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
-          }
-          else if (i == pSize-1){
-            wait(500,false);
-            System.out.print("and "+Constants.ANSI_RED+plyArray.get(i).Name+Constants.ANSI_CLEAR);
-          }
-          else{
-            wait(500,false);
-            System.out.print(Constants.ANSI_RED + plyArray.get(i).Name + Constants.ANSI_RESET+", ");
-          }
-        }
+        Player.DisplayPly(500);
         players = pSize;
       }
       //Aqui ponemos nuestro codigo pa el juego mogs.
@@ -218,9 +193,14 @@ class Main extends Constants{
       // Get the takecard function to return if the player has been eliminated and end the game.
       Player.ran = false;
       Player.catchCntr = 0;
-      if (Player.TakeCard(cPlayer, playerTurn)== true){
+      if (cPlayer.Hand.size()!=0){
+        if (Player.TakeCard(cPlayer, playerTurn)== true){
           uElim = true;
           break;
+        }
+      }
+      else{
+        System.out.println("There are no more cards left for you to take "+cPlayer.Name+", we will just skip you for now.");
       }
       if (Player.BookCkr(cPlayer)){
         break;
@@ -228,19 +208,19 @@ class Main extends Constants{
       wait(2000, true);
       playerTurn++;
       if (playerTurn == pSize){
-          System.out.println("The collective turn Ended");wait(3000,true);
-          playerTurn = 0;
-          turnCounter++;
+        System.out.println("The collective turn Ended");wait(3000,true);
+        playerTurn = 0;
+        turnCounter++;
       }
       if (turnCounter == 30){
-          return;
+        return;
       }
     }
     if (uElim){
-        System.out.println(Constants.ANSI_RED+"GAME OVER YOU HAVE BEEN ELIMINATED. BETTER LUCK NEXT TIME"+Constants.ANSI_RESET);
+      System.out.println(Constants.ANSI_RED+"GAME OVER YOU HAVE BEEN ELIMINATED. BETTER LUCK NEXT TIME"+Constants.ANSI_RESET);
     }
     else{
-        System.out.print("\nTHE GAME HAS ENDED");
+      System.out.print("\nTHE GAME HAS ENDED");
     }
     System.out.print("\nTHE WINNER IS:"+Player.hscPlayer.Name.toUpperCase()+"!!!\n\nWITH "+Player.hscPlayer.Score+" POINTS!!!");
   }
