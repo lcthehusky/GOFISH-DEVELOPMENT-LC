@@ -37,39 +37,61 @@ class Player extends Main{
    * Checks if the player as a matching set of 4 cards. If it is the case then it will 
    */
   public static boolean BookCkr(Player ply){
-    int hsz = ply.Hand.size();
-    ArrayList<Integer> matchKrd = new ArrayList<>();
-    for (int cntr1 = 0; cntr1<hsz;cntr1++){
-      matchKrd.clear();
-      for (int cntr2 = 0; cntr2<hsz;cntr2++){
-        if (ply.Hand.get(cntr1).SuiteName.equals(ply.Hand.get(cntr2).SuiteName)){
-          matchKrd.add(cntr2);
+    CardMkr tempCard = null;
+    int crdCntr = 0;
+    for (int cntr1 = 0; cntr1<ply.Hand.size();cntr1++){
+      tempCard = ply.Hand.get(cntr1);
+      crdCntr = 0;
+      for (int cntr2 = 0; cntr2< ply.Hand.size();cntr2++){
+        if (tempCard.SuiteNval == ply.Hand.get(cntr2).SuiteNval){
+          crdCntr++;
         }
       }
-      if (matchKrd.size() == 4){
-        for (int cntr3 = 0; cntr3 <4;cntr3++){
-          ply.Books.add(ply.Hand.remove(matchKrd.get(cntr3)-cntr3));
+      if (crdCntr == 4){
+        for (int cntr3 = 0; cntr3 < ply.Hand.size();){
+          if (tempCard.SuiteNval == ply.Hand.get(cntr3).SuiteNval){
+            ply.Books.add(ply.Hand.remove(cntr3));
+          }
+          else{
+            cntr3++;
+          }
         }
         ply.Score++;
         bWon++;
         for (Player sugoma : plyArray){
-          bWon += sugoma.Score;
           if (sugoma.Score> hscPlayer.Score){
             hscPlayer = sugoma;
           }
         }
-        if (bWon == 13){
-          return true;
+        for (Player sugoma : RemovedPlyArray){
+          if (sugoma.Score> hscPlayer.Score){
+            hscPlayer = sugoma;
+          }
         }
+        return true;
       }
     }
     return false;
   }
-
-  public static boolean RemovePlayer(int plyIndex){
-    System.out.println("Player: "+plyArray.remove(plyIndex).Name+" is out of the game.");
-    if (plyArray.get(plyIndex).isPlayer == true){
+  public static boolean EndGame(){
+    if (bWon == 13){
       return true;
+    }
+    else{
+      return false;
+    }
+  }
+  /*
+   * Removes a Player
+   */
+  public static boolean RemovePlayer(int plyIndex){
+    RemovedPlyArray.add(plyArray.get(plyIndex));
+    if (plyArray.get(plyIndex).isPlayer){
+      System.out.println("Player: "+plyArray.remove(plyIndex).Name+" is out of the game.");
+      return true;
+    }
+    else{
+      System.out.println("Player: "+plyArray.remove(plyIndex).Name+" is out of the game.");
     }
     return false;
   }
@@ -89,6 +111,9 @@ class Player extends Main{
       }
     }
   }
+  /*
+   * Function to take a Card from another player
+   */
   public static boolean TakeCard(Player cPly, int pTurn){
     String askType = new String();
     int plyIndex = pTurn;

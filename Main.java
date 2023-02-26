@@ -4,6 +4,7 @@ import java.lang.Thread;
 class Main extends Constants{
     public static ArrayList<CardMkr> stock = new ArrayList<CardMkr>();
     public static ArrayList<Player> plyArray = new ArrayList<Player>();
+    public static ArrayList<Player> RemovedPlyArray = new ArrayList<Player>();
     public static Scanner scan = new Scanner(System.in);
     public static String username;
     public static int cardcntr1 = 0;
@@ -153,7 +154,7 @@ class Main extends Constants{
     System.out.println("══════════════════════════════════════════════════════════════════════════");
     System.out.println("Remember to ask another player for their cards you must state for example:" + ANSI_ANSWER
         + plyArray.get(1).Name + " do you have any tens?\n\nor"+ANSI_ANSWER+" Omar do you have any kings?");
-    System.out.println("════════ ══════════════════════════════════════════════════════════════════");
+    System.out.println("══════════════════════════════════════════════════════════════════════════");
 
     while(true){
       pSize = plyArray.size();
@@ -193,7 +194,7 @@ class Main extends Constants{
       // Get the takecard function to return if the player has been eliminated and end the game.
       Player.ran = false;
       Player.catchCntr = 0;
-      if (cPlayer.Hand.size()!=0){
+      if (cPlayer.Hand.size()!=0 && pSize != 1){
         if (Player.TakeCard(cPlayer, playerTurn)== true){
           uElim = true;
           break;
@@ -202,7 +203,8 @@ class Main extends Constants{
       else{
         System.out.println("There are no more cards left for you to take "+cPlayer.Name+", we will just skip you for now.");
       }
-      if (Player.BookCkr(cPlayer)){
+      while(Player.BookCkr(cPlayer)){}
+      if (Player.EndGame()){
         break;
       }
       wait(2000, true);
@@ -222,6 +224,6 @@ class Main extends Constants{
     else{
       System.out.print("\nTHE GAME HAS ENDED");
     }
-    System.out.print("\nTHE WINNER IS:"+Player.hscPlayer.Name.toUpperCase()+"!!!\n\nWITH "+Player.hscPlayer.Score+" POINTS!!!");
+    System.out.print(Constants.ANSI_GREEN+"\nTHE WINNER IS: "+Player.hscPlayer.Name.toUpperCase()+"!!!\n\nWITH "+Player.hscPlayer.Score+" POINTS!!!"+ ANSI_RESET);
   }
 }
